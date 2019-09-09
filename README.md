@@ -1,8 +1,8 @@
-## rust-multithread-httpserver
+## Flare
 
-> a multithreaded boilerplate for building microservices with postgres support implemented
+> a multithreaded platform for building microservices with postgres support
 
-This is a blazing fast frontend node for our microservice network
+This is a blazing httpserver for a microservice network
 
 #### Features
 
@@ -21,6 +21,7 @@ This is a blazing fast frontend node for our microservice network
 
 
 ### Run
-
-`cargo run`
+```console
+nikandlv@nikandlv.ir:~$ cargo run
+```
 
