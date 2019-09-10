@@ -8,10 +8,12 @@ use dotenv;
 
 mod service;
 mod router;
+mod flare;
 /// Async request handler. Ddb pool is stored in application state.
 
 
 fn main() -> io::Result<()> {
+    flare.spark();
     std::env::set_var("RUST_LOG", "actix_web=debug");
     dotenv::dotenv().ok();
     env_logger::init();

@@ -1,4 +1,4 @@
 
-pub fn spark() -> io::Result<()> {
+pub fn spark() {
 
 }
