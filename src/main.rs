@@ -1,9 +1,15 @@
 extern crate postgres;
 
+use std::io;
+use dotenv;
+
 mod service;
 mod router;
 mod flare;
 
 fn main() -> io::Result<()> {
-    flare.spark();
+    std::env::set_var("RUST_LOG", "actix_web=debug");
+    dotenv::dotenv().ok();
+    env_logger::init();
+    flare::spark()
 }
