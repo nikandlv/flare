@@ -3,7 +3,6 @@ extern crate postgres;
 use std::io;
 use dotenv;
 
-mod service;
 mod router;
 mod flare;
 
