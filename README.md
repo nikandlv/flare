@@ -2,7 +2,7 @@
 
 > a multithreaded platform for building microservices with postgres support
 
-This is a blazing httpserver for a microservice network
+This is a blazing fast httpserver for a microservice network
 
 #### Features
 
