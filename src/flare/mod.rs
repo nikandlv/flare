@@ -8,7 +8,6 @@ pub fn spark() -> io::Result<()> {
 }
 
 fn build_pool() -> r2d2::Pool<PostgresConnectionManager> {
-    let database_type = std::env::var("DATABASE_TYPE");
     let url = std::env::var("DATABASE_URL").expect("DATABASE_URL not defined");
     let manager = PostgresConnectionManager::new(url,TlsMode::None)
         .expect("Unable to connect to database");
