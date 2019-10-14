@@ -1,3 +1,3 @@
-fn routes() {
+pub fn routes() {
     
 }
