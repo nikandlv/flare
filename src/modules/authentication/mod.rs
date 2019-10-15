@@ -2,7 +2,7 @@ use super::Module;
 use actix_web::{web, HttpResponse, Error};
 use crate::state::State;
 
-pub struct Core;
+pub struct Authentication;
 
 use serde::{Deserialize, Serialize};
 use futures::{Future, future::ok};
@@ -20,14 +20,14 @@ fn index() -> impl Future<Item = HttpResponse, Error = Error> {
 
 }
 
-impl Module for Core {
-    fn register(&self,state : &State,cfg: &mut web::ServiceConfig) {
+impl Module for Authentication {
+    fn register(&self,state : &mut State,cfg: &mut web::ServiceConfig) {
 
     }
-    fn boot(&self,state : &State,cfg: &mut web::ServiceConfig) {
+    fn boot(&self,state : &mut State,cfg: &mut web::ServiceConfig) {
 
     }
-    fn routes(&self,state : &State,cfg: &mut web::ServiceConfig) {
-        cfg.service(web::scope("core").route("/", web::get().to_async(index)));
+    fn routes(&self,state : &mut State,cfg: &mut web::ServiceConfig) {
+        cfg.service(web::scope("api/authentication").route("/", web::get().to_async(index)));
     }
 }
