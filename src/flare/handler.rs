@@ -1,0 +1,5 @@
+trait Handler {
+    fn handle() {
+
+    }
+}

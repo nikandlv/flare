@@ -3,11 +3,8 @@ use r2d2_postgres::{PostgresConnectionManager,TlsMode};
 use r2d2_mysql::{MysqlConnectionManager};
 use std::io;
 use mysql::{OptsBuilder, Opts};
-
-
-pub fn spark() -> io::Result<()> {
-    fireup()
-}
+use std::collections::HashMap;
+use std::sync::Mutex;
 
 fn build_postgres_pool(url : &str) -> r2d2::Pool<PostgresConnectionManager> {
     let manager = PostgresConnectionManager::new(url,TlsMode::None)
@@ -22,7 +19,9 @@ fn build_mysql_pool(url : &str) -> r2d2::Pool<MysqlConnectionManager> {
     r2d2::Pool::new(manager).expect("Unable to connect to database")
 }
 
-fn fireup() -> io::Result<()> {
+
+
+pub fn spark() -> io::Result<()> {
     let sys = actix_rt::System::new("flare");
     let url = std::env::var("DATABASE_URL").expect("DATABASE_URL not defined");
     let pool= if url.contains("postgresql") {
@@ -31,11 +30,20 @@ fn fireup() -> io::Result<()> {
         build_mysql_pool(&url);
     };
 
+
     let address = std::env::var("ADDRESS").expect("ADDRESS not defined");
     HttpServer::new(move || {
+        let mut state = crate::state::State {
+            database: pool.clone(),
+            handlers: Mutex::new(HashMap::new()),
+            storage: Mutex::new(HashMap::new()),
+        };
+
         App::new()
-            .configure(crate::router::get)
-            .data(pool.clone())
+            .configure(    |cfg| {
+                crate::modules::boot_modules(&mut state,cfg);
+            })
+            .data(state)
             .wrap(middleware::Logger::default())
     })
     .bind(address)?
