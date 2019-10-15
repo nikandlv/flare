@@ -4,7 +4,6 @@ use std::io;
 use dotenv;
 
 mod flare;
-mod router;
 mod modules;
 
 fn main() -> io::Result<()> {
